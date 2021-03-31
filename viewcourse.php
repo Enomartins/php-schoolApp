@@ -42,6 +42,39 @@
 <?php
     require('db.php');
     session_start();
+
+
+
+    if (isset($_REQUEST['delete'])) {
+      // $result = 0;
+      $username = $_SESSION['username'];
+      // removes backslashes
+      $delete = stripslashes($_REQUEST['delete']);
+      //escapes special characters in a string
+      $delete = mysqli_real_escape_string($con, $delete);
+      // $email    = stripslashes($_REQUEST['email']);
+      // $position    = stripslashes($_REQUEST['position']);
+      // $email    = mysqli_real_escape_string($con, $email);
+      // $password = stripslashes($_REQUEST['password']);
+      // $password = mysqli_real_escape_string($con, $password);
+      // $create_datetime = date("Y-m-d H:i:s");
+      $query    = "DELETE FROM topics WHERE topic = '" .$delete."'";
+      $result   = mysqli_query($con, $query);
+      if ($result) {
+          echo "<div class='container'><div class=' pt-5 text-center'>
+                <h3 class='-5'>Deleted successfully.</h3><br/>
+                <p class='link'>Click here to <a href='lecturerdashboard.php'>Refresh Dashboard</a></p>
+                </div></div>";
+      } else {
+          echo "<div class='pt-5 text-center'>
+                <h3 class='mt-5 pt-5'>Delete Failed.</h3><br/>
+                <p class='link'>Click here to <a href='lecturerdashboard.php'>Back to Dashboard</a> again.</p>
+                </div>";
+      }
+  }
+
+
+
     // When form submitted, check and create user session.
     if (isset($_POST['course'])) {
         $course = stripslashes($_REQUEST['course']);    // removes backslashes
@@ -77,9 +110,15 @@
                         "<form class='form d-flex' action='questions.php' method='post'>
                             <input type='hidden' id='' name='topic' value='". $row['topic']. "'>
                             <input style='background-color:purple; color:white' class='btn btn-block' type='submit' name='questions' value='Questions Here' class='px-4 btn-secondary rounded'>
-                        </form>".
+                        </form>";
+                        if($_SESSION['role'] == "lecturerdashboard.php"){
+                          echo "<form class='form my-2' action='viewcourse.php' method='post'>
+                          <input type='hidden' id='' name='delete' value='". $row['topic']. "'>
+                          <input style='color:white' class='btn btn-danger' type='submit' name='deletebtn' value='Delete Topic' class='px-4 btn-secondary rounded'>
+                      </form>";
+                        }
                             
-                        '</div>
+                        echo '</div>
                         </div>';
                         }
                         
