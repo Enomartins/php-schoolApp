@@ -4,7 +4,7 @@
                 <meta charset="utf-8"/>
                 <title>Course Details</title>
                 <!-- <link rel="stylesheet" href="style.css"/> -->
-                <link href="style.css?<?=filemtime("style.css")?>" rel="stylesheet" type="text/css" />
+                <link href="stylee.css?<?=filemtime("stylee.css")?>" rel="stylesheet" type="text/css" />
                 <link href="bootstrap.min.css?<?=filemtime("bootstrap.min.css")?>" rel="stylesheet" type="text/css" />
             </head>
             <body style="background-color:white">
@@ -57,7 +57,7 @@
             $_SESSION['topic'] = '';
             
 
-            echo '<h1 class="my-4 text-capitalize">'.'Course Title:'. '  '. $course .'</h1>'. '<div class="pt-4"> <h3>Lessons</h3></div>';
+            echo '<h1 class="my-4 text-capitalize">'.'Course Title:'. '  '. $course .'</h1>'. '<div class="pt-4"> <h3>Lessons</h3></div><div class="grid-container">';
             // Redirect to user dashboard page
             // header("Location: dashboard.php");
             
@@ -67,9 +67,9 @@
                         {
                         $result->data_seek($j);
                         $row = $result->fetch_array(MYSQLI_ASSOC);
-                        echo '<div class="d-flex">'.'<div class="my-4 mx-auto row d-flex card px-4"><h3 class="card-header my-3 text-capitalize">'.$row['topic'].'</h3>'.'
+                        echo '<div class="my-4 grid-item card"><h3 class="card-header my-3 text-capitalize">'.$row['topic'].'</h3>'.'
                         <div class="video card-img-top">'.
-                        '<video src="'. $row['video'].'" width="560" height="320" controls>
+                        '<video src="'. $row['video'].'" height="320" controls>
                       </video>'
                         .'</div>
                         <div class="">'.
@@ -80,7 +80,7 @@
                         </form>".
                             
                         '</div>
-                        </div></div>';
+                        </div>';
                         }
                         
     } 
@@ -89,6 +89,7 @@
 
     
 ?>
+</div>
 </div>
 
 <script src="./jquery-3.5.1.min.js" ></script>
